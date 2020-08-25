@@ -1,1 +1,1 @@
-vanilla reduxg
+vanila-redux
