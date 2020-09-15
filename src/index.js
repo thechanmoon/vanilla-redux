@@ -13,11 +13,16 @@ const reducer = (state = [], action) => {
 	switch (action.type) {
 		case ADD_TODO:
 			return [{ text: action.text }, ...state]
+<<<<<<< HEAD
 		case DELETE_TODO:
 			return state.filter((todo) => {
 				console.log('DELETE+TODO : ', todo.id, action.id)
 				return todo.id !== action.id
 			})
+=======
+		case REMOVE_TODO:
+			return []
+>>>>>>> a0a4d88fac86814c4d6f03c1f63271973c42ee7c
 		default:
 			return state
 	}
@@ -32,8 +37,13 @@ const renderDodoList = () => {
 		let button = document.createElement('button')
 		li.innerText = element.text
 		li.id = 'li-' + index
+<<<<<<< HEAD
 		// console.log('li : ' + li)
 		// console.log('li : ' + li.id)
+=======
+		console.log('li : ' + li)
+		console.log('li : ' + li.id)
+>>>>>>> a0a4d88fac86814c4d6f03c1f63271973c42ee7c
 		button.innerText = 'Del'
 		button.id = index
 		button.addEventListener('click', removeButtonHandler)
@@ -48,10 +58,13 @@ const addText = (text) => {
 	store.dispatch({ type: ADD_TODO, text: text })
 }
 
+<<<<<<< HEAD
 const deleteTodo = (id) => {
 	store.dispatch({ type: DELETE_TODO, id: id })
 }
 
+=======
+>>>>>>> a0a4d88fac86814c4d6f03c1f63271973c42ee7c
 const addButtonHandler = (e) => {
 	e.preventDefault()
 	let text = input.value
@@ -61,6 +74,7 @@ const addButtonHandler = (e) => {
 
 const removeButtonHandler = (e) => {
 	e.preventDefault()
+<<<<<<< HEAD
 	// console.log('removeButtonHandler', e, e.target, e.target.id)
 	// // console.log('removeButtonHandler', )
 	// const li = document.getElementById('li-' + e.target.id)
@@ -68,6 +82,14 @@ const removeButtonHandler = (e) => {
 	// e.target.remove()
 	// li.remove()
 	deleteTodo('li-' + e.target.id)
+=======
+	console.log('removeButtonHandler', e, e.target, e.target.id)
+	// console.log('removeButtonHandler', )
+	const li = document.getElementById('li-' + e.target.id)
+	console.log(li)
+	e.target.remove()
+	li.remove()
+>>>>>>> a0a4d88fac86814c4d6f03c1f63271973c42ee7c
 }
 
 form.addEventListener('submit', addButtonHandler)
