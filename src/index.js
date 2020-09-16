@@ -39,26 +39,35 @@ const renderDodoList = () => {
 		button.innerText = 'DEL'
 		button.id = element.id
 		button.addEventListener('click', removeButtonHandler)
+		li.appendChild(button)
 		ul.appendChild(li)
-		ul.appendChild(button)
 	})
 }
 
 const store = createStore(reducer)
 store.subscribe(renderDodoList)
+
 const addTodo = (text) => {
-	store.dispatch({ type: ADD_TODO, text: text })
+	return { type: ADD_TODO, text: text }
 }
 
 const deleteTodo = (id) => {
-	store.dispatch({ type: DELETE_TODO, id: id })
+	return { type: DELETE_TODO, id: id }
+}
+
+const dispatchAddTodo = (text) => {
+	store.dispatch(addTodo(text))
+}
+
+const dispatchDeleteTodo = (id) => {
+	store.dispatch(deleteTodo(id))
 }
 
 const addButtonHandler = (e) => {
 	e.preventDefault()
 	let text = input.value
 	input.value = ''
-	addTodo(text)
+	dispatchAddTodo(text)
 }
 
 const removeButtonHandler = (e) => {
@@ -69,7 +78,7 @@ const removeButtonHandler = (e) => {
 	// console.log(li)
 	// e.target.remove()
 	// li.remove()
-	deleteTodo(e.target.id)
+	dispatchDeleteTodo(e.target.id)
 }
 
 form.addEventListener('submit', addButtonHandler)
