@@ -12,12 +12,14 @@ const reducer = (state = [], action) => {
 	// return state
 	switch (action.type) {
 		case ADD_TODO:
-			return [{ text: action.text }, ...state]
+			return [{ text: action.text, id: Date.now() }, ...state]
 		case DELETE_TODO:
-			return state.filter((todo) => {
-				console.log('DELETE+TODO : ', todo.id, action.id)
-				return todo.id !== action.id
-			})
+			// return state.filter((todo) => {
+			// 	console.log('DELETE+TODO : ', todo.id, action.id)
+			// 	return todo.id.toString() !== action.id
+			// })
+			return state.filter((todo) => todo.id !== parseInt(action.id))
+		// return state.filter((todo) => todo.id.toString() !== action.id)
 		default:
 			return state
 	}
@@ -26,16 +28,16 @@ const reducer = (state = [], action) => {
 const renderDodoList = () => {
 	const text = store.getState()
 	ul.innerText = ''
-	text.forEach((element, index) => {
+	text.forEach((element) => {
 		console.log(element)
 		let li = document.createElement('li')
 		let button = document.createElement('button')
 		li.innerText = element.text
-		li.id = 'li-' + index
+		// li.id = 'li-' + index
 		// console.log('li : ' + li)
 		// console.log('li : ' + li.id)
-		button.innerText = 'Del'
-		button.id = index
+		button.innerText = 'DEL'
+		button.id = element.id
 		button.addEventListener('click', removeButtonHandler)
 		ul.appendChild(li)
 		ul.appendChild(button)
@@ -44,7 +46,7 @@ const renderDodoList = () => {
 
 const store = createStore(reducer)
 store.subscribe(renderDodoList)
-const addText = (text) => {
+const addTodo = (text) => {
 	store.dispatch({ type: ADD_TODO, text: text })
 }
 
@@ -56,7 +58,7 @@ const addButtonHandler = (e) => {
 	e.preventDefault()
 	let text = input.value
 	input.value = ''
-	addText(text)
+	addTodo(text)
 }
 
 const removeButtonHandler = (e) => {
@@ -67,7 +69,7 @@ const removeButtonHandler = (e) => {
 	// console.log(li)
 	// e.target.remove()
 	// li.remove()
-	deleteTodo('li-' + e.target.id)
+	deleteTodo(e.target.id)
 }
 
 form.addEventListener('submit', addButtonHandler)
